@@ -21,11 +21,10 @@ FROM PhillyHousing_clean
 GROUP BY ward
 ORDER BY ward;
 
--- 4. Tax Burden Relative to Sale Price
-SELECT ward,
-       ROUND(AVG(state_tax_amount + local_tax_amount), 2) AS avg_total_tax,
+-- 4. Map of Sale Price Per Zipcode
+SELECT SUBSTR(zip_code, 1, 5) AS zip5,
        ROUND(AVG(sale_price), 2) AS avg_sale_price,
-       ROUND(AVG((state_tax_amount + local_tax_amount) / sale_price * 100), 2) AS avg_tax_percent
+       COUNT(*) AS num_sales
 FROM PhillyHousing_clean
-GROUP BY ward
-ORDER BY avg_tax_percent DESC;
+GROUP BY zip5
+ORDER BY avg_sale_price DESC;
